@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>LectureChecker</title>
+
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="css/framework7.ios.min.css">
+    <link rel="stylesheet" href="css/framework7.ios.colors.css">
+    <link rel="stylesheet" href="css/framework7-icons.css">
+    <link rel="stylesheet" href="css/framework7_newRelease.ios.css">
+
+
+    <!-- Andi-->
+    <link rel="stylesheet" href="css/style_progressbar.css">
+
+
+    <!--Moritz + Steffen-->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style_MS.css">
+
+    <!-- JS-->
+    <!-- JS + jQuery -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+
+    <!--Moritz + Steffens JS-->
+    <script src="js/js_MS.js"></script>
+
+
+</head>
+
+<body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+
+    <!-- Views-->
+    <div class="views">
+        <!-- Your main view, should have "view-main" class-->
+        <div class="view view-main">
+            <!-- Top Navbar-->
+            <div class="navbar">
+                <div class="navbar-inner">
+
+                    <div class="left">
+
+                        <a href="#" id="chevron_back1" class="link icon-only" onclick="chevronClick();">
+                            <i class="f7-icons color-blue" id="chevron_back">chevron_left</i>
+                        </a>
+                    </div>
+
+                    <div id="NavbarTitle">
+                        <span id="TitleText" class="sliding">LectureChecker</span>
+
+                    </div>
+
+                    <div class="right">
+                        <!-- Right link contains only icon - additional "icon-only" class-->
+                        <a href="#" id="writeComment1" class="link icon-only" onclick="writeComment();">
+                            <i id="writeComment" class="f7-icons color-blue fa fa-pencil-square-o"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+            <div class="pages navbar-through toolbar-through">
+                <!-- Page, data-page contains page name-->
+                <div data-page="index" class="page">
+                    <!-- Scrollable page content-->
+                    <div class="page-content">
+
+                        <!------------------------------------------- TABS -------------------------------------------------->
+                        <div id="SearchScreen">
+                            <div class="content-block">
+
+                                <!-- Buttons row as tabs controller -->
+                                <div class="buttons-row theme-blue">
+                                    <!-- Link to 1st tab, active -->
+                                    <a href="#tab1OpenSearch" id="freeSearchText" class="tab-link active button">Free Search</a>
+                                    <!-- Link to 2nd tab -->
+                                    <a href="#tab2YourProgram" id="MyProgramTab" class="tab-link button"></a>
+                                    <!-- Link to 3rd tab -->
+                                    <a href="#tab3Browse" class="tab-link button">Faculties</a>
+                                </div>
+                            </div>
+
+
+                            <div>
+                                <div class="tabs">
+                                    <!-- Tab 1, active by default -->
+                                    <div id="tab1OpenSearch" class="tab active">
+                                        <div class="content-block">
+
+                                            <!---------------------------------------------------- Search Bar ------------------------------------------------------------->
+
+                                            <i id="searchIcon" class="fa fa-1x fa-search"></i>
+                                            <input type="text" id="userInput" placeholder="Enter a course name">
+                                            <span id="clearSearchField" onclick="clearSearchField();deleteFilters();">
+                                                <i id="removeIcon" class="fa fa-remove"></i>
+                                            </span>
+
+
+                                            <span onclick="showHideFilters();">
+                                            <i id="filterIcon" class="fa fa-2x fa-filter color-blue shadowed"></i>
+                                            </span>
+
+                                            <i id="checkIcon" class="fa fa-check"></i>
+
+                                            <div id="newSearchButton" onclick="newSearchFunction();" class="button button-fill shadowed">Search!</div>
+
+
+                                            <!------------------------------------------------------ FILTER SELECTION -------------------------------------------------------------->
+
+
+                                            <div id="filters">
+
+                                                <p><a id="ApplyFiltersButton" href="#" class="button button-fill color-blue shadowed" onclick="closeFilters();newSearchFunction();">Search!</a></p>
+
+                                                <div class="list-block accordion-list">
+
+
+                                                    <div class="list-block centeredHeading" id="chooseFiltersText">Choose your filter options!</div>
+
+
+                                                    <div class="list-block inset" style="margin-left: 0px; margin-right: 0px;">
+                                                        <ul>
+                                                            <li class="item-content open-panel" data-panel="right" href="#" onclick="showPanel(2);">
+                                                                <div class="item-inner">
+                                                                    <div class="item-title "><a data-panel="right" href="#" class="open-panel filterTitle">Overall Rating</a></div>
+                                                                    <span id="overallTitle"><i class="NA_FilterDefault">N/A</i></span>
+                                                                </div>
+                                                            </li>
+                                                            <li class="item-content open-panel" data-panel="right" href="#" onclick="showPanel(3);">
+                                                                <div class="item-inner">
+                                                                    <div class="item-title "><a data-panel="right" href="#" class="open-panel filterTitle">Lecturer</a></div>
+                                                                    <span id="LPTitle"><i class="NA_FilterDefault">N/A</i></span>
+                                                                </div>
+                                                            </li>
+                                                            <li class="item-content open-panel" data-panel="right" href="#" onclick="showPanel(4);">
+                                                                <div class="item-inner">
+                                                                    <div class="item-title "><a data-panel="right" href="#" class="open-panel filterTitle">Exam Average</a></div>
+                                                                    <span id="averageTitle"><i class="NA_FilterDefault">N/A</i></span>
+                                                                </div>
+                                                            </li>
+                                                            <li class="item-content open-panel" data-panel="right" href="#" onclick="showPanel(5);">
+                                                                <div class="item-inner">
+                                                                    <div class="item-title "><a data-panel="right" href="#" class="open-panel filterTitle">Faculty</a></div>
+                                                                    <span id="FacTitle"><i class="NA_FilterDefault">N/A</i></span>
+                                                                </div>
+                                                            </li>
+                                                            <li class="item-content open-panel" data-panel="right" href="#" onclick="showPanel(6);">
+                                                                <div class="item-inner">
+                                                                    <div class="item-title "><a data-panel="right" href="#" class="open-panel filterTitle">Program</a></div>
+                                                                    <span id="ProgTitle"><i class="NA_FilterDefault">N/A</i></span>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div onclick="deleteFilters();" id="deleteFilters" class="color-blue">Delete all Filters <i class="fa fa-trash color-blue" aria-hidden="true"></i></div>
+                                                </div>
+                                            </div>
+
+
+
+
+                                            <!--------------------------------------------------------- No search results display----------------------------------------------------------->
+
+                                            <div id="nothingFoundDisplay" class="content-block inset searchbar-not-found">
+                                                <div class="content-block-inner">Sorry, no lectures found!</div>
+                                            </div>
+
+
+                                            <div id="searchResults">
+                                                <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
+                                                <div id="LVBlock" class="list-block list-block-search searchbar-found">
+                                                    <span class="listHeadings scoreIndicator">Overall</span>
+
+                                                    <span class="listHeadings open-panel sortingIcon" href="#" onclick="showPanel(1);">Alphabetically 
+                                                    <i class="fa fa-sort color-blue" aria-hidden="true"></i>
+                                                    </span>
+
+                                                    <ul id="LVList">
+
+                                                        <!-- Here goes the list of lectures, stored as objects in var Lehrveranstaltungen -->
+
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Tab 2 -->
+                                    <div id="tab2YourProgram" class="tab">
+
+                                        <div class="list-block inset list-block-search searchbar-found">
+
+                                            <div class="list-block centeredHeading">Lectures for Human Factors Engineering:</div>
+                                            <span class="listHeadings scoreIndicator">Overall</span>
+
+                                            <ul id="HfEList">
+
+                                                <!-- Here goes the list of lectures from one' s study program -->
+
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                    <!-- Tab 3 -->
+                                    <div id="tab3Browse" class="tab">
+
+                                        <p class="list-block centeredHeading">Choose a faculty and browse its courses!</p>
+
+                                        <div class="list-block inset">
+                                            <ul>
+                                                <li>
+                                                    <a href="#" class="item-link smart-select" data-back-on-select="true">
+                                                        <!-- select -->
+                                                        <select id="FacultySelectBox" onchange="getChosenFaculty(); hideFacultylist(); writeIntoFacultyList()" name="Faculties at TUM">
+
+                                                            <option value="Informatics">Informatics</option>
+                                                            <option value="Mathematics">Mathematics</option>
+                                                            <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                                            <option value="NA_Faculty" selected>N/A</option>
+                                                        </select>
+                                                        <div class="item-content">
+                                                            <div class="item-inner">
+
+                                                                <div class="item-title">Faculty</div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div id="facultyResults">
+                                            <div id="facultyBlock" class="list-block inset list-block-search searchbar-found">
+                                                <span class="listHeadings scoreIndicator">Overall</span>
+
+                                                <ul id="facultyList">
+                                                    <!--Here go the lectures of a faculty-->
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-----------------------------------------------------------Detail-Screen--------------------------------------------------------------------------------->
+                        <div id="DetailScreen">
+
+                            <!-- Overall Rating -->
+
+                            <div class="content-block-title highlighted littlemargin">Average Ratings</div> <span class="detailRight listHeadings">Points from 1 to 5</span>
+
+                            <div class="list-block inset">
+                                <ul>
+                                    <li class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title">Overall Rating<a href="#" data-popover=".popover-overall" class="open-popover"><i class="f7-icons explanationCriteria">help</i></a></div>
+
+                                            <div id="overallRating" class="item-after DetailValue">Label</div><span class="arrow"><i id="DetailOverall" class="fa fa-circle DetailArrow"></i></span>
+                                        </div>
+                                    </li>
+                                    <li class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title">Lecturer<a href="#" data-popover=".popover-lecturer" class="open-popover"><i class="f7-icons explanationCriteria">help</i></a></div>
+                                            <div class="item-after DetailValue" id="lecturerPerformance"><span class="badge">5</span></div>
+                                            <span class="arrow"><i id="DetailLecturer" class="fa fa-circle DetailArrow"></i></span></div>
+                                    </li>
+                                    <li class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title">Value of Attendance<a href="#" data-popover=".popover-value" class="open-popover"><i class="f7-icons explanationCriteria">help</i></a></div>
+                                            <div class="item-after DetailValue" id="additionalValueOfAttendance"><span class="badge">5</span></div>
+                                            <span class="arrow"><i id="DetailAdditionalValue" class="fa fa-circle DetailArrow"></i></span></div>
+                                    </li>
+
+                                    <li class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title">Result/Work-Ratio<a href="#" data-popover=".popover-ratio" class="open-popover"><i class="f7-icons explanationCriteria">help</i></a></div>
+                                            <div class="item-after DetailValue" id="demandedEffort"><span class="badge">5</span></div>
+                                            <span class="arrow"><i id="DetailEffort" class="fa fa-circle DetailArrow"></i></span></div>
+                                    </li>
+                                    <li class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title">Exam Easiness<a href="#" data-popover=".popover-exam" class="open-popover"><i class="f7-icons explanationCriteria">help</i></a></div>
+                                            <div class="item-after DetailValue" id="examDifficulty"><span class="badge">5</span></div>
+                                            <span class="arrow"><i id="DetailDifficulty" class="fa fa-circle DetailArrow"></i></span></div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="list-block inset">
+                                <span class="detailRight2 listHeadings">Grade from 1 to 4</span>
+                                <ul>
+                                    <li class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title">Last Exam's Average<a href="#" data-popover=".popover-avg" class="open-popover"><i class="f7-icons explanationCriteria">help</i></a></div>
+                                            <div class="item-after DetailValue" id="lastExamAverage"><span class="badge">5</span></div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                            <!-- Course Information -->
+
+                            <div class="content-block-title highlighted">Course Information</div>
+
+                            <div class="list-block inset">
+                                <ul>
+                                    <li class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title">Time</div>
+                                            <div class="item-after" id="lectureTime">10:15 - 11:45</div>
+                                        </div>
+                                    </li>
+                                    <li class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title">Location</div>
+                                            <div class="item-after">
+                                                <div class="item-after" id="lectureLocation">MW0350</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title">Lecturer</div>
+                                            <div class="item-after">
+                                                <div class="item-after" id="lectureLecturer">Dr. Eberhard</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title">ECTS</div>
+                                            <div class="item-after" id="lectureEcts">3</div>
+                                        </div>
+                                    </li>
+                                    <li class="item-content" onclick="openTUMOnline();">
+                                        <div class="item-inner">
+                                            <div id="TUMLink" class="item-title">TUMOnline course description <i class="fa fa-external-link color-blue" aria-hidden="true"></i></div>
+
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <!-- Download Button -->
+                                <div>
+                                    <div id="downloadButton" class="blue button button-big button-fill shadowed" onclick="openDownloadScreen();">Get shared files HERE <span id="downloadIcon" class="f7-icons">download</span>
+                                    </div>
+
+                                </div>
+
+                                <!-- Comment Section now dynamically generated from the Lecture-Objects-->
+
+
+                                <div id="commentContainer"></div>
+                            </div>
+                        </div>
+
+
+
+                        <!----------------------------------------------------------Commentscreen-------------------------------------------------------------------------------------->
+
+                        <!-- Overall Rating -->
+                        <div id="CommentScreen">
+                            <div class="content-block-title littlemargin highlighted">Rate your course</div>
+
+                            <div class="list-block inset">
+                                <ul>
+                                    <li class="item-content">
+                                        <div class="item-inner">
+                                            <div class="container spaceToButton">
+                                                <div>
+                                                    <span class="item-title">Overall Rating<a href="#" data-popover=".popover-overall" class="open-popover"><i class="f7-icons explanationCriteria">help</i></a></span>
+                                                    <span class="arrow"><i id="ratingOverall" class="fa fa-circle"></i></span>
+                                                    <button id="buttonProgressBar" class="plusOne">+1 pts</button>
+                                                </div>
+
+                                                <span class="wordbad">very bad </span><span class="wordgood"> very good</span>
+
+                                                <div class="badge-block badgeOverall row rowBox shadowed">
+                                                    <input type="radio" class="radio" name="progress1" value="five" id="five1">
+                                                    <label for="five1" class="label" onclick="arrowOverall1()">
+                                                        <span class="badge badgeOverall badge0 shadowed col-3">1</span></label>
+
+                                                    <input type="radio" class="radio" name="progress1" value="twentyfive" id="twentyfive1">
+                                                    <label for="twentyfive1" class="label" onclick="arrowOverall2()">
+                                                        <span class="badge badgeOverall badge2 shadowed col-2">2</span>
+                                                        <!--class="button badge2 button-fill color-green button-round shadowed col-2"-->
+                                                    </label>
+
+                                                    <input type="radio" class="radio" name="progress1" value="fifty" id="fifty1" checked>
+                                                    <label for="fifty1" class="label" onclick="arrowOverall3()">
+                                                        <span class="badge badgeOverall badge3 shadowed col-2">3</span></label>
+
+                                                    <input type="radio" class="radio" name="progress1" value="seventyfive" id="seventyfive1">
+                                                    <label for="seventyfive1" class="label" onclick="arrowOverall4()">
+                                                        <span class="badge badgeOverall badge4 shadowed col-2">4</span></label>
+
+                                                    <input type="radio" class="radio" name="progress1" value="onehundred" id="onehundred1">
+                                                    <label for="onehundred1" class="label" onclick="arrowOverall5()">
+                                                        <span class="badge badgeOverall badge5 shadowed col-3">5</span> </label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="item-content">
+                                        <div class="item-inner">
+
+                                            <div class="container">
+                                                <div>
+                                                    <span class="item-title">Lecturer<a href="#" data-popover=".popover-lecturer" class="open-popover"><i class="f7-icons explanationCriteria">help</i></a></span>
+                                                    <span class="arrow"><i id="ratingLP" class="fa fa-circle"></i></span>
+                                                </div>
+
+                                                <span class="wordbad">very bad </span><span class="wordgood"> very good</span>
+                                                <div class="badge-block row rowBox shadowed">
+
+                                                    <input type="radio" class="radio" name="progress2" value="five" id="five2">
+                                                    <label for="five2" class="label" onclick="arrowLP1()">
+                                                        <span class="badge badgeLecturer badge6 shadowed col-3">1</span> </label>
+
+                                                    <input type="radio" class="radio" name="progress2" value="twentyfive" id="twentyfive2">
+                                                    <label for="twentyfive2" class="label" onclick="arrowLP2()">
+                                                        <span class="badge badgeLecturer badge7 shadowed col-2">2</span></label>
+
+                                                    <input type="radio" class="radio" name="progress2" value="fifty" id="fifty2" checked>
+                                                    <label for="fifty2" class="label" onclick="arrowLP3()">
+                                                        <span class="badge badgeLecturer badge8 shadowed col-2">3</span></label>
+
+                                                    <input type="radio" class="radio" name="progress2" value="seventyfive" id="seventyfive2">
+                                                    <label for="seventyfive2" class="label" onclick="arrowLP4()">
+                                                        <span class="badge badgeLecturer badge9 shadowed col-2">4</span></label>
+
+                                                    <input type="radio" class="radio" name="progress2" value="onehundred" id="onehundred2">
+                                                    <label for="onehundred2" class="label" onclick="arrowLP5()">
+                                                        <span class="badge badgeLecturer badge10 shadowed col-3">5</span></label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="item-content">
+                                        <div class="item-inner">
+                                            <div class="container">
+                                                <div>
+                                                    <span class="item-title">Value of Attendance<a href="#" data-popover=".popover-value" class="open-popover"><i class="f7-icons explanationCriteria">help</i></a></span>
+                                                    <span class="arrow"><i id="ratingAV" class="fa fa-circle"></i></span>
+                                                </div>
+
+                                                <span class="wordbad">very low </span><span class="wordgood"> very high</span>
+
+                                                <div class="badge-block badgeOverall row rowBox shadowed">
+                                                    <input type="radio" class="radio" name="progress5" value="five" id="five5">
+                                                    <label for="five5" class="label" onclick="arrowAV1()">
+                                                        <span class="badge badgeValue badge11 shadowed col-2">1</span></label>
+
+                                                    <input type="radio" class="radio" name="progress5" value="twentyfive" id="twentyfive5">
+                                                    <label for="twentyfive5" class="label" onclick="arrowAV2()">
+                                                        <span class="badge badgeValue badge12 shadowed col-2">2</span></label>
+
+                                                    <input type="radio" class="radio" name="progress5" value="fifty" id="fifty5" checked>
+                                                    <label for="fifty5" class="label" onclick="arrowAV3()">
+                                                        <span class="badge badgeValue badge13 shadowed col-2">3</span></label>
+
+                                                    <input type="radio" class="radio" name="progress5" value="seventyfive" id="seventyfive5">
+                                                    <label for="seventyfive5" class="label" onclick="arrowAV4()">
+                                                        <span class="badge badgeValue badge14 shadowed col-2">4</span></label>
+
+                                                    <input type="radio" class="radio" name="progress5" value="onehundred" id="onehundred5">
+                                                    <label for="onehundred5" class="label" onclick="arrowAV5()">
+                                                        <span class="badge badgeValue badge15 shadowed col-2">5</span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+
+                                    <li class="item-content">
+                                        <div class="item-inner">
+                                            <div class="container">
+                                                <div>
+                                                    <span class="item-title">Result/Work-Ratio<a href="#" data-popover=".popover-ratio" class="open-popover"><i class="f7-icons explanationCriteria">help</i></a></span>
+                                                    <span class="arrow"><i id="ratingDE" class="fa fa-circle"></i></span>
+                                                </div>
+                                                <span class="wordbad">very low </span><span class="wordgood"> very high</span>
+
+                                                <div class="badge-block badgeOverall row rowBox shadowed">
+                                                    <input type="radio" class="radio" name="progress3" value="five" id="five3">
+                                                    <label for="five3" class="label" onclick="arrowDE1()">
+                                                        <span class="badge badgeResult badge16 shadowed col-3">1</span> </label>
+
+                                                    <input type="radio" class="radio" name="progress3" value="twentyfive" id="twentyfive3">
+                                                    <label for="twentyfive3" class="label" onclick="arrowDE2()">
+                                                        <span class="badge badgeResult badge17 shadowed col-3">2</span> </label>
+
+                                                    <input type="radio" class="radio" name="progress3" value="fifty" id="fifty3" checked>
+                                                    <label for="fifty3" class="label" onclick="arrowDE3()">
+                                                        <span class="badge badgeResult badge18 shadowed col-3">3</span> </label>
+
+                                                    <input type="radio" class="radio" name="progress3" value="seventyfive" id="seventyfive3">
+                                                    <label for="seventyfive3" class="label" onclick="arrowDE4()">
+                                                        <span class="badge badgeResult badge19 shadowed col-3">4</span> </label>
+
+                                                    <input type="radio" class="radio" name="progress3" value="onehundred" id="onehundred3">
+                                                    <label for="onehundred3" class="label" onclick="arrowDE5()">
+                                                        <span class="badge badgeResult badge20 shadowed col-3">5</span> </label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="item-content">
+                                        <div class="item-inner">
+
+                                            <div class="container">
+                                                <div>
+                                                    <span class="item-title">Exam Easiness<a href="#" data-popover=".popover-exam" class="open-popover"><i class="f7-icons explanationCriteria">help</i></a></span>
+                                                    <span class="arrow"><i id="ratingED" class="fa fa-circle"></i></span>
+                                                </div>
+
+                                                <span class="wordbad">very low </span><span class="wordgood"> very high</span>
+
+                                                <div class="badge-block badgeOverall row rowBox shadowed">
+                                                    <input type="radio" class="radio" name="progress4" value="five" id="five4">
+                                                    <label for="five4" class="label" onclick="arrowED1()">
+                                                        <span class="badge badgeEasiness badge21 shadowed col-3">1</span> </label>
+
+                                                    <input type="radio" class="radio" name="progress4" value="twentyfive" id="twentyfive4">
+                                                    <label for="twentyfive4" class="label" onclick="arrowED2()">
+                                                        <span class="badge badgeEasiness badge22 shadowed col-3">2</span> </label>
+
+                                                    <input type="radio" class="radio" name="progress4" value="fifty" id="fifty4" checked>
+                                                    <label for="fifty4" class="label" onclick="arrowED3()">
+                                                        <span class="badge badgeEasiness badge23 shadowed col-3">3</span> </label>
+
+                                                    <input type="radio" class="radio" name="progress4" value="seventyfive" id="seventyfive4">
+                                                    <label for="seventyfive4" class="label" onclick="arrowED4()">
+                                                        <span class="badge badgeEasiness badge24 shadowed col-3">4</span> </label>
+
+                                                    <input type="radio" class="radio" name="progress4" value="onehundred" id="onehundred4">
+                                                    <label for="onehundred4" class="label" onclick="arrowED5()">
+                                                        <span class="badge badgeEasiness badge25 shadowed col-3">5</span> </label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Optional inputs-->
+
+                            <div class="content-block-title highlighted" id="optional">Optional<span><a href="#" data-popover=".popover-optional" class="open-popover"><i class="f7-icons explanationCriteria">help</i></a></span></div>
+                            <div class="list-block inset" id="optionalBlock">
+                                <ul>
+                                    <!-- Text inputs -->
+
+                                    <li class="align-top">
+                                        <div class="item-content">
+                                            <!--<div class="item-media spaceToButton"><i class="icon f7-icons">chat</i></div> -->
+                                            <div class="item-inner">
+                                                <button id="buttonComment" class="plusOne">+2 pts</button>
+                                                <div class="item-input">
+                                                    <textarea id="rateComment" placeholder="Please comment..." style="margin-top: 20px;"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="list-block inset open-popup" id="optionalBlock" onclick="showAveragePicker();">
+                                <ul>
+                                    <li>
+
+                                        <div class="item-content">
+                                            <div class="item-media spaceToButton"><i class="icon f7-icons">add</i></div>
+                                            <div class="item-inner">
+                                                <button id="buttonAverageGrade" class="plusOne">+1 pts</button>
+                                                <div class="item-input">
+                                                    <input type="text" id="rateAverageGrade" class="picker-device" placeholder="Last exam's average" style="margin-top: 20px;" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="list-block inset" id="optionalBlock">
+                                <ul>
+                                    <li>
+                                        <div class="item-content" onclick="test4()">
+                                            <div class="item-media spaceToButton" onclick="shareFiles();"><i class="icon f7-icons">add</i></div>
+                                            <div class="item-inner">
+                                                <button id="buttonAverageGrade" class="plusOne">+4 pts</button>
+                                                <div class="item-input">
+                                                    <input type="text" id="shareButton" onclick="shareFiles();" placeholder="Share your files HERE" readonly style="margin-top: 20px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Submit Button -->
+
+                            <div class="content-block">
+
+                                <div><a href="#" id="newSearchButton" onclick="submitRating(); sort();" class="button button-big active shadowed">SUBMIT</a></div>
+
+                            </div>
+                        </div>
+
+
+                        <!-------------------------------------------------------------- FavoritesScreen----------------------------------------------------------------------------------->
+
+                        <div id="FavoritesScreen">
+
+                            <div class="content-block-title littlemargin highlighted">My favorite Lectures</div>
+                            <span id="OverallFAVS" class="scoreIndicator">Overall</span>
+                            <div id="FavBlock" class="list-block inset list-block-search searchbar-found">
+
+
+                                <ul id="FavList">
+
+
+                                    <!-- Here goes the list of lectures, stored as objects in var Lehrveranstaltungen -->
+
+                                </ul>
+
+                            </div>
+                        </div>
+
+
+
+                        <!---------------------------------------------------- Profile-Screen---------------------------------------------------------------------------------------------->
+
+
+                        <div id="ProfileScreen" class="list-block inset">
+
+                            <div>
+                                <div class="content-block-title littlemargin highlighted">My Credit</div>
+                                <ul>
+
+                                    <li class="item-content">
+                                        <div class="item-inner">
+                                            <div>My Score:
+                                                <span id="currentCredit" class="currentCreditValue"></span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="open-popup">
+                                        <a class="item-content item-link" onclick="creditPOPUP();">
+                                            <div class="item-inner">Show My Credit History</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="content-block-title highlighted">Personal Information</div>
+                            <ul>
+                                <li class="item-content">
+                                    <div class="item-media"><i class="f7-icons">person</i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title">Marcus Dietzel</div>
+                                    </div>
+                                </li>
+                                <li class="item-content">
+                                    <div class="item-media"><i class="f7-icons">email</i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title">marcus.dietzel@tum.de</div>
+                                    </div>
+                                </li>
+                                <li class="item-content">
+                                    <div class="item-media"><i class="f7-icons">book_fill</i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title">Ergonomie - HFE</div>
+                                    </div>
+                                </li>
+                                <li class="item-content">
+                                    <div class="item-media"><i class="2x f7-icons">chat</i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title">English</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+
+
+                        <!----------------------------------------------- Infoscreen ------------------------------------------------------------------------------------->
+
+
+                        <div id="Infoscreen">
+
+                            <div class="content-block-title littlemargin highlighted">The Credit System</div>
+                            <div class="content-block inset">
+                                <div class="content-block-inner">
+                                    <p id="creditSystemContent">
+                                        The LectureChecker aims to help you decide which lectures to attend at TUM.
+                                        <br>
+                                        <br>However, the LectureChecker only works if everyone contributes by evaluating lectures!
+                                        <br>
+                                        <br>Therefore you can only access the download-links to exercises or summaries provided by other users with enough credit points.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="content-block-title highlighted">Getting Credit Points</div>
+                            <div class="content-block inset">
+                                <div class="content-block-inner">
+
+                                    <table>
+                                        <tr id="columsTitle">
+                                            <th class="rowBorder" id="actionColumn">Action</th>
+                                            <th class="rowBorder">Reward</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="rowBorder"> Give a quantitative rating of a lecture</td>
+                                            <td class="rowBorder">
+                                                <button id="quantRating" class="plusOneTwo shadowedCredit">+1 pts</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="rowBorder">Provide the average of the test you wrote</td>
+                                            <td class="rowBorder">
+                                                <button id="provAvg" class="plusOneTwo shadowedCredit">+1 pts</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="rowBorder">Write a short verbal comment</td>
+                                            <td class="rowBorder">
+                                                <button id="verbComment" class="plusOneTwo shadowedCredit">+2 pts</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="rowBorder">Upload a download-link to a summary, exercises or other lecture-relevant material you would like to share with others</td>
+                                            <td class="rowBorder">
+                                                <button id="uploadLink" class="plusOneTwo shadowedCredit">+4 pts</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cost for a download</td>
+                                            <td>
+                                                <button id="downloadCost" class="shadowedCredit">- 4 pts</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--------------------------------------------------------------------- Bottom Tabbar -------------------------------------------------------------------------------------->
+
+
+        <div class="toolbar tabbar tabbar-labels">
+            <div class="toolbar-inner">
+
+                <a href="#tab3" class="tab-link active" id="SearchTab" onclick="openSearchScreen();">
+                    <i class="f7-icons">search_strong</i>
+                    <span class="tabbar-label">SEARCH</span>
+                </a>
+
+                <a href="#tab1" class="tab-link" id="FavoritesTab" onclick="openFavoritesScreen();">
+                    <i class="f7-icons">favorites</i>
+                    <span class="tabbar-label">FAVORITES</span>
+                </a>
+                <a href="#tab2" class="tab-link" id="ProfileTab" onclick="openProfileScreen();">
+                    <i class="f7-icons">person</i>
+                    <span id="userNameProfile" class="tabbar-label"></span>
+
+                </a>
+                <a href="#tab4" class="tab-link" id="CreditTab" onclick="openInfoScreen();">
+                    <i class="f7-icons">info</i>
+                    <span class="tabbar-label">INFO</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-------------------------------------------------------------------------------- Sorting Panel ------------------------------------------------------------------------->
+
+
+    <div id="rightPanel" class="panel panel-right panel-cover">
+        <div id="sortingPanel" class="content-block">
+            <div class="filterTitleinPanel">Sorting Criteria: </div>
+
+            <div class="list-block inset shadowed" style="margin-left: 0px; margin-right: 0px;">
+                <ul>
+                    <li onclick="sortByName();" class="close-panel">
+                        <label class="label-radio item-content">
+                            <!-- Checked by default -->
+                            <input type="radio" name="my-radio" value="Name" checked="checked">
+                            <div class="item-inner">
+                                <div class="item-title">Alphabetically</div>
+                            </div>
+                        </label>
+                    </li>
+                    <li onclick="sortByOverall();" class="close-panel">
+                        <label class="label-radio item-content">
+                            <input type="radio" name="my-radio" value="Overall_sort">
+                            <div class="item-inner">
+                                <div class="item-title">Overall</div>
+                            </div>
+                        </label>
+                    </li>
+                    <li onclick="sortByLP();" class="close-panel">
+                        <label class="label-radio item-content">
+                            <input type="radio" name="my-radio" value="LecturerPerformance">
+                            <div class="item-inner">
+                                <div class="item-title">Lecturer</div>
+                            </div>
+                        </label>
+                    </li>
+                    <li onclick="sortByValueAttend();" class="close-panel">
+                        <label class="label-radio item-content">
+                            <input type="radio" name="my-radio" value="ValueofAttendance">
+                            <div class="item-inner">
+                                <div class="item-title">Value of Attendance</div>
+                            </div>
+                        </label>
+                    </li>
+                    <li onclick="sortByAverage();" class="close-panel">
+                        <label class="label-radio item-content">
+                            <input type="radio" name="my-radio" value="TestAverage">
+                            <div class="item-inner">
+                                <div class="item-title">Exam Average</div>
+                            </div>
+                        </label>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+
+        <!------------------------------------------------Filter Panels--------------------------------------------------------------------------------------------------------------->
+
+
+        <div id="OverallPanel">
+
+            <div class="content-block">
+
+                <p class="filterTitleinPanel">Overall Rating</p>
+
+                <p>5 = very good</p>
+                <p>1 = very bad</p>
+
+
+                <div class="list-block inset shadowed" style="margin-left: 0px; margin-right: 0px;">
+                    <ul>
+
+                        <li onclick="setNumber3(4.5);" class="item-content close-panel">
+                            <div class="item-media"><i class="fa fa-circle rotate-0"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title">&ge; 4.5</div><i id="Overall15" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li onclick="setNumber3(3.5);" class="item-content close-panel">
+                            <div class="item-media"><i class="fa fa-circle rotate-315"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title">&ge; 3.5</div><i id="Overall25" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li onclick="setNumber3(2.5);" class="item-content close-panel">
+                            <div class="item-media"><i class="fa fa-circle rotate-270"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title">&ge; 2.5</div><i id="Overall35" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li onclick="setNumber3(1.5);" class="item-content close-panel">
+                            <div class="item-media"><i class="fa fa-circle rotate-225"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title">&ge; 1.5</div><i id="Overall45" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li onclick="setNumber3(0);" class="item-content close-panel">
+                            <div class="item-media"><i class="fa fa-circle whiteArrow"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title">N/A</div><i id="overall_NA" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="LCPanel">
+            <div class="content-block">
+                <p class="filterTitleinPanel">Lecturer</p>
+
+                <p>5 = very good</p>
+                <p>1 = very bad</p>
+
+                <div class="list-block inset shadowed" style="margin-left: 0px; margin-right: 0px;">
+                    <ul>
+
+                        <li onclick="setNumber1(4.5);" class="item-content close-panel">
+                            <div class="item-media"><i class="fa fa-circle rotate-0"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title">&ge; 4.5</div><i id="LP15" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+
+
+                        <li onclick="setNumber1(3.5);" class="item-content close-panel">
+                            <div class="item-media"><i class="fa fa-circle rotate-315"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title">&ge; 3.5</div><i id="LP25" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li onclick="setNumber1(2.5);" class="item-content close-panel">
+                            <div class="item-media"><i class="fa fa-circle rotate-270"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title">&ge; 2.5</div><i id="LP35" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li onclick="setNumber1(1.5);" class="item-content close-panel">
+                            <div class="item-media"><i class="fa fa-circle rotate-225"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title">&ge; 1.5</div><i id="LP45" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li onclick="setNumber1(0);" class="item-content close-panel">
+                            <div class="item-media"><i class="fa fa-circle whiteArrow"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title">N/A</div><i id="LP_NA" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div id="AVGPanel">
+            <div class="content-block">
+                <p class="filterTitleinPanel">Exam Average</p>
+
+                <p>1 = best grade</p>
+                <p>5 = worst grade</p>
+
+                <div class="list-block inset shadowed" style="margin-left: 0px; margin-right: 0px;">
+                    <ul>
+
+                        <li onclick="setNumber2(1.5);" class="item-content close-panel">
+
+                            <div class="item-inner">
+                                <div class="item-title">&le; 1.5</div><i id="AV15" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li onclick="setNumber2(2);" class="item-content close-panel">
+
+                            <div class="item-inner">
+                                <div class="item-title">&le; 2.0</div><i id="AV20" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li onclick="setNumber2(2.5);" class="item-content close-panel">
+
+                            <div class="item-inner">
+                                <div class="item-title">&le; 2.5</div><i id="AV25" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li onclick="setNumber2(3);" class="item-content close-panel">
+
+                            <div class="item-inner">
+                                <div class="item-title">&le; 3.0</div><i id="AV30" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li onclick="setNumber2(3.5);" class="item-content close-panel">
+
+                            <div class="item-inner">
+                                <div class="item-title">&le; 3.5</div><i id="AV35" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li onclick="setNumber2(9);" class="item-content close-panel">
+
+                            <div class="item-inner">
+                                <div class="item-title">N/A</div><i id="AV_NA" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="FacultyPanel">
+            <div class="content-block">
+                <p class="filterTitleinPanel">Faculty</p>
+
+                <div class="list-block inset shadowed" style="margin-left: 0px; margin-right: 0px;">
+                    <ul>
+
+                        <li class="item-content close-panel" onclick="getChosenFaculty4Filter(2);">
+                            <div class="item-inner">
+                                <div class="item-title">Informatics</div><i id="InfoTitle" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li class="item-content close-panel" onclick="getChosenFaculty4Filter(3);">
+                            <div class="item-inner">
+                                <div class="item-title">Mathematics</div><i id="MathTitle" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li class="item-content close-panel" onclick="getChosenFaculty4Filter(4);">
+                            <div class="item-inner">
+                                <div class="item-title">Mech. Engineering</div><i id="MECHETitle" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li class="item-content close-panel" onclick="getChosenFaculty4Filter(5);">
+                            <div class="item-inner">
+                                <div class="item-title">N/A</div><i id="NA_FAC" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="ProgramPanel">
+            <div class="content-block">
+                <p class="filterTitleinPanel">Study Program</p>
+
+                <div class="list-block inset shadowed" style="margin-left: 0px; margin-right: 0px;">
+                    <ul>
+                        <li class="item-content close-panel" onclick="getProgram(1);">
+                            <div class="item-inner">
+                                <div class="item-title ">Ergonomie HFE</div><i id="HFETitle" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li class="item-content close-panel" onclick="getProgram(2);">
+                            <div class="item-inner">
+                                <div class="item-title">Informatics</div><i id="INFOTitle" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li class="item-content close-panel" onclick="getProgram(3);">
+                            <div class="item-inner">
+                                <div class="item-title">Mathematics</div><i id="MathPTitle" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li class="item-content close-panel" onclick="getProgram(4);">
+                            <div class="item-inner">
+                                <div class="item-title">Mech. Engineering</div><i id="MECHEPTitle" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                        <li class="item-content close-panel" onclick="getProgram(5);">
+                            <div class="item-inner">
+                                <div class="item-title">N/A</div><i id="P_NA" class="f7-icons filterChecked">check</i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-------------------------------------------------------------Popup: Credit History ------------------------------------------------------------------------------------------------>
+
+
+    <div id="popUp" class="popup">
+        <div class="content-block" id="popupContent">
+            <div id="CreditHistoryPOP">
+                <div id="myCreditHistoryTitle" class="content-block-title highlighted"> My Credit History <span class="closeHistoryIconSpan close-popup"><i id="closeHistoryIcon" class="fa fa-remove"></i></span></div>
+
+
+                <div id="timelineContainer" class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-item-date">23 <small>DEC</small></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div class="timeline-item-time">12:33</div>
+                            <div class="timeline-item-title">Fahrzeugkonzepte</div>
+                            <div class="timeline-item-text">Quantitative Rating +1</div>
+                            <div class="timeline-item-text">Commented +2</div>
+                            <div class="timeline-item-text">Upload Summary +4</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-item-date">23 <small>DEC</small></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div class="timeline-item-time">12:33</div>
+                            <div class="timeline-item-title">Technische Mechanik 1</div>
+                            <div class="timeline-item-text">Quantitative Rating +1</div>
+                            <div class="timeline-item-text">Download Exercises -4</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-item-date">23 <small>DEC</small></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content">
+                            <div class="timeline-item-time">12:33</div>
+                            <div class="timeline-item-title">Spanish A2.2</div>
+                            <div class="timeline-item-text">Quantitative Rating +1</div>
+                            <div class="timeline-item-text">Upload Summary +4</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="creditAbrechung">
+                    <div>Sum:</div>
+                    <div class="currentCreditValue"></div>
+                    <br>
+                </div>
+
+                <div class="whatCanIAfford"></div>
+                <p><a class="button button-fill color-blue close-popup shadowed">Close!</a></p>
+
+            </div>
+
+
+
+            <!--------------------------------------------------------------Popup: Comment-Detailscreen ----------------------------------------------------------------------------------->
+
+
+            <div class="content-block" id="CommentPopupContent">
+
+                <div id="CommentPopupTitle" class="content-block-title highlighted">Rating by <span id="CommentDetailTitle">Michael</span><span id="closeCommentDetails" class="closeHistoryIconSpan close-popup"><i id="closeHistoryIcon" class="fa fa-remove"></i></span></div>
+                <div class="content-block highlighted">
+                    <div id="CommentDetailStudy">Mechanical Engineering</div>
+                    <div id="CommentDetailSemester"> Some Year and Summer or Winter</div>
+                </div>
+                <div>
+                    <div class="list-block">
+                        <ul>
+                            <li class="item-content">
+                                <div>
+                                    <div class="item-title">Overall Rating</div>
+                                    <div class="item-after CDetailValue" id="CoverallRatingVal"></div><span id="CoverallRating"><i class="fa fa-circle CDetailArrow"></i></span></div>
+                            </li>
+                            <li class="item-content">
+                                <div>
+                                    <div class="item-title">Lecturer</div>
+                                    <div class="item-after CDetailValue" id="ClecturerPerformanceVal"></div><span id="ClecturerPerformance"><i class="fa fa-circle CDetailArrow"></i></span></div>
+                            </li>
+                            <li class="item-content">
+                                <div>
+                                    <div class="item-title">Value of Attendance</div>
+                                    <div class="item-after CDetailValue" id="CadditionalValueOfAttendanceVal"></div><span id="CadditionalValueOfAttendance"><i class="fa fa-circle CDetailArrow"></i></span></div>
+                            </li>
+                            <li class="item-content">
+                                <div>
+                                    <div class="item-title">Result/Work-Ratio</div>
+                                    <div class="item-after CDetailValue" id="CdemandedEffortVal"></div><span id="CdemandedEffort"><i class="fa fa-circle CDetailArrow"></i></span></div>
+                            </li>
+                            <li class="item-content">
+                                <div>
+                                    <div class="item-title">Exam Easyness</div>
+                                    <div class="item-after CDetailValue" id="CexamEasynessVal"></div><span id="CexamEasyness"><i class="fa fa-circle CDetailArrow"></i></span></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list-block" id="CommentAverage">
+                        <ul>
+                            <li class="item-content">
+                                <div>
+                                    <div class="item-title">Average Grade</div>
+                                    <div class="item-after CDetailValue"><span id="CaverageGrade">5</span></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <span id="reportButton" onclick="reportComment();"><i class="fa fa-exclamation-circle"></i> Report comment</span>
+                    <div class="list-block" id="commentDetailContainer"></div>
+                </div>
+                <p><a class="button button-fill color-blue close-popup shadowed">Close!</a></p>
+            </div>
+
+
+            <!--------------------------------------------------------------------------Popup: Picker for Test Average---------------------------------------------------------------------->
+            <div id="averagePicker">
+
+                <div id="AveragePickerTitle" class="highlighted">Choose the average of the exam you took! Please provide the average calculated based on the participants who passed the exam!</div>
+
+                <div class="list-block inset">
+                    <ul>
+                        <li class="close-popup" onclick="getUserAverage(0);">
+                            <label class="label-radio item-content">
+
+                                <input id="averagePickerNA" type="radio" name="my-radio" value="N_A" checked="checked">
+                                <div class="item-inner">
+                                    <div class="item-title">N/A</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(1.0);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="1.0">
+                                <div class="item-inner">
+                                    <div class="item-title">1.0</div>
+                                </div>
+                            </label>
+                        </li>
+
+                        <li class="close-popup" onclick="getUserAverage(1.1);">
+                            <label class="label-radio item-content">
+                                <input type="radio" name="my-radio" value="1.1">
+                                <div class="item-inner">
+                                    <div class="item-title">1.1</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(1.2);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="1.2">
+                                <div class="item-inner">
+                                    <div class="item-title">1.2</div>
+                                </div>
+                            </label>
+                        </li>
+
+                        <li class="close-popup" onclick="getUserAverage(1.3);">
+                            <label class="label-radio item-content">
+                                <input type="radio" name="my-radio" value="1.3">
+                                <div class="item-inner">
+                                    <div class="item-title">1.3</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(1.4);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="1.4">
+                                <div class="item-inner">
+                                    <div class="item-title">1.4</div>
+                                </div>
+                            </label>
+                        </li>
+
+                        <li class="close-popup" onclick="getUserAverage(1.5);">
+                            <label class="label-radio item-content">
+                                <input type="radio" name="my-radio" value="1.5">
+                                <div class="item-inner">
+                                    <div class="item-title">1.5</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(1.6);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="1.6">
+                                <div class="item-inner">
+                                    <div class="item-title">1.6</div>
+                                </div>
+                            </label>
+                        </li>
+
+                        <li class="close-popup" onclick="getUserAverage(1.7);">
+                            <label class="label-radio item-content">
+                                <input type="radio" name="my-radio" value="1.7">
+                                <div class="item-inner">
+                                    <div class="item-title">1.7</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(1.8);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="1.8">
+                                <div class="item-inner">
+                                    <div class="item-title">1.8</div>
+                                </div>
+                            </label>
+                        </li>
+
+                        <li class="close-popup" onclick="getUserAverage(1.9);">
+                            <label class="label-radio item-content">
+                                <input type="radio" name="my-radio" value="1.9">
+                                <div class="item-inner">
+                                    <div class="item-title">1.9</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(2.0);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="2.0">
+                                <div class="item-inner">
+                                    <div class="item-title">2.0</div>
+                                </div>
+                            </label>
+                        </li>
+
+
+                        <li class="close-popup" onclick="getUserAverage(2.1);">
+                            <label class="label-radio item-content">
+                                <input type="radio" name="my-radio" value="2.1">
+                                <div class="item-inner">
+                                    <div class="item-title">2.1</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(2.2);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="2.2">
+                                <div class="item-inner">
+                                    <div class="item-title">2.2</div>
+                                </div>
+                            </label>
+                        </li>
+
+                        <li class="close-popup" onclick="getUserAverage(2.3);">
+                            <label class="label-radio item-content">
+                                <input type="radio" name="my-radio" value="2.3">
+                                <div class="item-inner">
+                                    <div class="item-title">2.3</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(2.4);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="2.4">
+                                <div class="item-inner">
+                                    <div class="item-title">2.4</div>
+                                </div>
+                            </label>
+                        </li>
+
+                        <li class="close-popup" onclick="getUserAverage(2.5);">
+                            <label class="label-radio item-content">
+                                <input type="radio" name="my-radio" value="2.5">
+                                <div class="item-inner">
+                                    <div class="item-title">2.5</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(2.6);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="2.6">
+                                <div class="item-inner">
+                                    <div class="item-title">2.6</div>
+                                </div>
+                            </label>
+                        </li>
+
+                        <li class="close-popup" onclick="getUserAverage(2.7);">
+                            <label class="label-radio item-content">
+                                <input type="radio" name="my-radio" value="2.7">
+                                <div class="item-inner">
+                                    <div class="item-title">2.7</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(2.8);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="2.8">
+                                <div class="item-inner">
+                                    <div class="item-title">2.8</div>
+                                </div>
+                            </label>
+                        </li>
+
+                        <li class="close-popup" onclick="getUserAverage(2.9);">
+                            <label class="label-radio item-content">
+                                <input type="radio" name="my-radio" value="2.9">
+                                <div class="item-inner">
+                                    <div class="item-title">2.9</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(3.0);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="3.0">
+                                <div class="item-inner">
+                                    <div class="item-title">3.0</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(3.1);">
+                            <label class="label-radio item-content">
+                                <input type="radio" name="my-radio" value="3.1">
+                                <div class="item-inner">
+                                    <div class="item-title">3.1</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(3.2);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="3.2">
+                                <div class="item-inner">
+                                    <div class="item-title">3.2</div>
+                                </div>
+                            </label>
+                        </li>
+
+                        <li class="close-popup" onclick="getUserAverage(3.3);">
+                            <label class="label-radio item-content">
+                                <input type="radio" name="my-radio" value="3.3">
+                                <div class="item-inner">
+                                    <div class="item-title">3.3</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(3.4);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="3.4">
+                                <div class="item-inner">
+                                    <div class="item-title">3.4</div>
+                                </div>
+                            </label>
+                        </li>
+
+                        <li class="close-popup" onclick="getUserAverage(3.5);">
+                            <label class="label-radio item-content">
+                                <input type="radio" name="my-radio" value="3.5">
+                                <div class="item-inner">
+                                    <div class="item-title">3.5</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(3.6);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="3.6">
+                                <div class="item-inner">
+                                    <div class="item-title">3.6</div>
+                                </div>
+                            </label>
+                        </li>
+
+                        <li class="close-popup" onclick="getUserAverage(3.7);">
+                            <label class="label-radio item-content">
+                                <input type="radio" name="my-radio" value="3.7">
+                                <div class="item-inner">
+                                    <div class="item-title">3.7</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(3.8);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="3.8">
+                                <div class="item-inner">
+                                    <div class="item-title">3.8</div>
+                                </div>
+                            </label>
+                        </li>
+
+                        <li class="close-popup" onclick="getUserAverage(3.9);">
+                            <label class="label-radio item-content">
+                                <input type="radio" name="my-radio" value="3.9">
+                                <div class="item-inner">
+                                    <div class="item-title">3.9</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li class="close-popup" onclick="getUserAverage(4.0);">
+                            <label class="label-radio item-content">
+
+                                <input type="radio" name="my-radio" value="4.0">
+                                <div class="item-inner">
+                                    <div class="item-title">4.0</div>
+                                </div>
+                            </label>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--------------------------------------------------------Explanatory PopOvers for Comment- and Detailscreen---------------------------------------------------------------------------->
+
+    <div class="popover popover-overall">
+        <div class="popover-angle"></div>
+        <div class="popover-inner">
+            <div class="content-block">
+                <p class="centeredPopoverTitle">Overall Rating
+                </p>
+                <p class="centeredPopoverText">Describes how you evaluate the course or lecture all in all!
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="popover popover-lecturer">
+        <div class="popover-angle"></div>
+        <div class="popover-inner">
+            <div class="content-block">
+                <p class="centeredPopoverTitle">Lecturer</p>
+                <p class="centeredPopoverText">Describes how you evaluate the Lecturer all in all!</p>
+            </div>
+        </div>
+    </div>
+    <div class="popover popover-value">
+        <div class="popover-angle"></div>
+        <div class="popover-inner">
+            <div class="content-block">
+                <p class="centeredPopoverTitle">Value of Attendance</p>
+                <p class="centeredPopoverText">Describes if you recommend attending the lecture or course personally compared to preparing for the exam with provided materials only.</p>
+            </div>
+        </div>
+    </div>
+    <div class="popover popover-ratio">
+        <div class="popover-angle"></div>
+        <div class="popover-inner">
+            <div class="content-block">
+                <p class="centeredPopoverTitle">Result/Work-Ratio</p>
+                <p class="centeredPopoverText">Describes how much work you have to invest to achieve a good result in the final exam. Little work for a good grade means the ratio is high!</p>
+            </div>
+        </div>
+    </div>
+    <div class="popover popover-exam">
+        <div class="popover-angle"></div>
+        <div class="popover-inner">
+            <div class="content-block">
+                <p class="centeredPopoverTitle">Exam Easiness</p>
+                <p class="centeredPopoverText">Describes if the exam was hard or easy to do.</p>
+            </div>
+        </div>
+    </div>
+    <div class="popover popover-avg">
+        <div class="popover-angle"></div>
+        <div class="popover-inner">
+            <div class="content-block">
+                <p class="centeredPopoverTitle">Exam Average</p>
+                <p class="centeredPopoverText">Average calculated based on the participants who passed the exam!</p>
+            </div>
+        </div>
+    </div>
+    <div class="popover popover-optional">
+        <div class="popover-angle"></div>
+        <div class="popover-inner">
+            <div class="content-block">
+                <p class="centeredPopoverTitle">Optinal Information</p>
+                <p class="centeredPopoverText">Giving a verbal comment and/or providing the average grade of the exam you wrote ist not mandatory. However, it increases your credit score!</p>
+            </div>
+        </div>
+    </div>
+    <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="js/framework7.min.js"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="js/my-app.js"></script>
+</body>
+
+</html>

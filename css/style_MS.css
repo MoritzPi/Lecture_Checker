@@ -1,0 +1,700 @@
+/*------------------------------------Style optimized for display on iphone 4! Elements might be somewhat shifted when displayed in google Chrome iphone4-emulator!---------------*/
+
+
+/*--------------------------------------------------------Appbar-------------------------------------------------*/
+
+* {
+    font-family: helvetia;
+}
+
+#NavbarTitle {
+    font-weight: bold;
+    font-size: 90%;
+}
+
+#TitleText {
+    display: flex;
+    justify-content: space-around;
+}
+
+#chevron_back {
+    display: none;
+}
+
+#chevron_back1 {
+    display: none;
+    position: absolute;
+    left: 8px;
+    top: -20px;
+}
+
+#writeComment {
+    display: none;
+    font-size: 30px;
+}
+
+#writeComment1 {
+    display: none;
+    position: absolute;
+    right: -6px;
+    top: -16px;
+}
+
+.highlighted {
+    color: green;
+    font-weight: 900;
+    color: black;
+}
+
+.starred {
+    color: #0065BD;
+    font-size: 150%;
+}
+
+.fa-star-o {
+    font-size: 150%;
+    color: #0065BD;
+}
+
+.blue {
+    background-color: #1ec60b;
+    border-color: #1ec60b;
+}
+
+.leftArrow {
+    display: inline-block;
+    margin: right: 10px;
+    padding: right: 20px;
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+    position: relative;
+    bottom: 3px;
+}
+
+#LVBlock {
+    margin-top: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+#LVList {
+    border-radius: 7px;
+}
+
+#sortingPanel,
+#rightPanel,
+#OverallPanel,
+#LCPanel,
+#AVGPanel,
+#FacultyPanel,
+#ProgramPanel {
+    display: none;
+    background-color: #efeff4;
+}
+
+.listHeadings {
+    font-size: smaller;
+}
+
+.scoreIndicator {
+    position: relative;
+    left: 12px;
+}
+
+.shadowed {
+    box-shadow: 0px 1px 2px #888888;
+}
+
+.list-block {
+    margin: 10px 0px 25px 0px;
+}
+
+.centeredHeading {
+    text-align: center;
+    font-weight: bold;
+}
+
+#ApplyFiltersButton {
+    margin: 0px 0px 25px 0px;
+}
+
+.item-title {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+}
+
+
+/*--------------------------------------------------------Detailscreen-------------------------------------------------*/
+
+.detailRight {
+    position: absolute;
+    right: 20px;
+    top: 56px;
+    font-size: 12px;
+}
+
+.detailRight2 {
+    font-size: smaller;
+    position: relative;
+    bottom: 8px;
+    left: 188px;
+    font-size: 12px;
+}
+
+#downloadScreen {
+    display: none;
+}
+
+.popover {
+    width: 200px;
+}
+
+.centeredPopoverTitle {
+    text-align: center;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.centeredPopoverText {
+    text-align: center;
+}
+
+#TUMLink {
+    color: #0065BD;
+}
+
+noPadding {
+    padding: 0px;
+}
+
+.metaInformation {
+    font-size: 12px;
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+
+.fa-chevron-up {
+    color: #0065BD;
+    position: relative;
+    font-size: 20px;
+    bottom: 3px;
+    right: 3px;
+    border-radius: 5px;
+}
+
+.makeRound {
+    border: none;
+    /* Make the border edges round */
+    border-radius: 7px;
+}
+
+.metaCloser {
+    margin-top: 2px;
+}
+
+#downloadButton {
+    margin: 20px 0px;
+}
+
+
+/*#markFAV {
+    margin: 20px 0px;
+}
+
+.starInDV {
+    position: absolute;
+    right: 0px;
+    font-size: 23px;
+}*/
+
+
+/*--------------------------------------------------------Commentscreen-------------------------------------------------*/
+
+.spaceToButton {
+    margin-top: 20px;
+}
+
+#shareButton {
+    margin-top: 5px;
+}
+
+#optionalBlock {
+    margin-bottom: 5px;
+}
+
+.explanationCriteria {
+    margin: 5px 3px 5px 7px;
+    font-size: 14px;
+    color: #0065BD;
+    font-weight: 700;
+}
+
+
+/* moving the badges closer*/
+
+.badge-block {
+    margin-left: 15px;
+    margin-right: 20px;
+}
+
+.greyTrafficlight {
+    color: #8e8e93;
+}
+
+.wordgood {
+    position: relative;
+    font-size: 12px;
+    left: 150px;
+}
+
+.wordbad {
+    position: relative;
+    font-size: 12px;
+    left: 5px;
+}
+
+
+/*.badge {
+    border: 1px solid #ddd;
+    Make the border edges round
+    border-radius: 10px;
+     Add a grey border
+}
+ */
+
+#averagePicker {
+    display: none;
+}
+
+#AveragePickerTitle {
+    text-align: center;
+}
+
+.rowBox {
+    /* now also adding a border with radius */
+    border: 1px solid #ddd;
+    /* Make the border edges round */
+    border-radius: 5px;
+    /* Add a grey border */
+}
+
+
+/* removes the grey background of a checked badge (label) */
+
+.radio:checked + .label {
+    background-color: white;
+}
+
+
+/*--------------------------------------------------------Tabbar-------------------------------------------------*/
+
+
+/*making tabbar-icons and back-chevron TUM-blue*/
+
+#SearchTab.active,
+#FavoritesTab.active,
+#ProfileTab.active,
+#CreditTab.active,
+.back {
+    color: #0065BD;
+}
+
+
+/*Hiding all but Search-Screen after start of the app*/
+
+#CommentScreen,
+#DetailScreen,
+#FavoritesScreen,
+#ProfileScreen {
+    display: none;
+}
+
+
+/*SEARCHSCREEN*/
+
+#freeSearchText {
+    padding: 0px;
+}
+
+#SearchScreen .content-block {
+    margin: 10px 0px 15px 0px;
+}
+
+#clearSearchField {
+    font-size: 18px;
+    color: lightgrey;
+    position: absolute;
+    right: 59px;
+    top: 110px;
+}
+
+#checkIcon {
+    position: absolute;
+    color: darkred;
+    display: none;
+    right: 17px;
+    top: 102px;
+}
+
+#userInput {
+    width: 65%;
+    /* Full-width */
+    font-family: 'Helvetia', Arial, sans-serif;
+    /* TUM font */
+    font-size: 16px;
+    /* Increase font-size */
+    padding: 12px 20px 12px 40px;
+    /* Add some padding */
+    border: 1px solid #ddd;
+    /* Make the border edges round */
+    border-radius: 5px;
+    /* Add a grey border */
+    margin-bottom: 12px;
+    /* Add some space below the input */
+}
+
+#searchIcon {
+    position: absolute;
+    margin: 18px 10px;
+    color: lightgrey;
+}
+
+#removeIcon {
+    vertical-align: middle;
+    margin-right: 5px;
+    color: lightgrey;
+}
+
+#newSearchButton {
+    background-color: #0065BD;
+}
+
+.sortingIcon {
+    position: absolute;
+    right: 20px;
+    color: #0065BD;
+}
+
+#facultyResults {
+    display: none;
+}
+
+#nothingFoundDisplay {
+    color: green;
+    text-align: center;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+
+/*PROFILESCREEN*/
+
+#ProfileSettingsIcon {
+    display: none;
+    color: #0065BD;
+    display: none;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+}
+
+
+/* new Filter Icon position and Look */
+
+#filterIcon {
+    position: relative;
+    top: 4px;
+    border: 1px solid #0065BD;
+    border-radius: 5px;
+    padding: 7px 6px 7px 6px;
+}
+
+.currentCreditText {
+    color: #0065BD;
+}
+
+#creditAbrechung {
+    font-weight: bold;
+    text-align: center;
+    font-size: larger;
+    color: #0065BD;
+}
+
+#closeHistoryIcon {
+    color: #0065BD;
+    font-size: large;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+}
+
+.closeHistoryIconSpan {
+    display: inline-block;
+    position: absolute;
+    right: 0%;
+    width: 20%;
+    height: 60%;
+}
+
+.whatCanIAfford {
+    text-align: center;
+    font-weight: bolder;
+    margin-bottom: 15px;
+    color: grey;
+}
+
+#currentCredit {
+    position: absolute;
+    right: 15px;
+    top: 12px;
+    font-weight: 600;
+}
+
+#myCreditHistoryTitle {
+    margin-top: 0px;
+    height: 30px;
+    padding-top: 6px;
+}
+
+#CommentPopupTitle {
+    margin-top: 0px;
+    margin-right: 0px;
+    height: 30px;
+    padding-top: 6px;
+}
+
+#creditSystemContent {
+    font-size: 13px;
+}
+
+#popupContent {
+    margin-top: 15px;
+}
+
+
+/*FAVORITESCREEN*/
+
+.littlemargin {
+    margin-top: 15px;
+}
+
+#OverallFAVS {
+    margin: 0px 18px;
+    font-size: 14px;
+    color: rgb(109, 109, 114);
+}
+
+#FavBlock {
+    margin-top: 0px;
+}
+
+
+/*INFOSCREEN*/
+
+#Infoscreen {
+    display: none;
+}
+
+#infoscreen_inset {
+    margin: 20px 0px 10px 18px;
+}
+
+#creditEarnings {
+    list-style-type: disc;
+    margin-left: 15px;
+}
+
+.shadowedCredit {
+    box-shadow: 0px 1px 2px #888888;
+    font-family: 'Helvetia', Arial, sans-serif;
+}
+
+.plusOne {
+    font-family: 'Helvetia', Arial, sans-serif;
+}
+
+.plusOneTwo {
+    font-family: 'Helvetia', Arial, sans-serif;
+    position: absolute;
+    border-radius: 20px;
+    background-color: #1ec60b;
+    color: white;
+    border-color: #1ec60b;
+    /*    border-color: #19ad08;*/
+    right: 15px;
+}
+
+#downloadCost {
+    position: absolute;
+    right: 15px;
+    border-radius: 20px;
+    background-color: orangered;
+    color: white;
+    border-color: orangered;
+}
+
+
+/*Table on Info-Screen*/
+
+table {
+    font-size: 13px;
+}
+
+#columsTitle th {
+    font-weight: 900;
+    text-align: center;
+}
+
+th {
+    height: 30px;
+}
+
+td {
+    padding: 10px 8px 10px 0px;
+}
+
+.rowBorder {
+    border-bottom: 1px solid #8e8e93;
+}
+
+#actionColumn {
+    width: 200px;
+}
+
+
+/*Filters*/
+
+#chooseFiltersText {
+    margin-bottom: 15px;
+}
+
+.item-title,
+.filterTitle {
+    color: #8e8e93;
+}
+
+.filterTitleinPanel {
+    font-size: larger;
+    font-weight: bolder;
+    margin-bottom: 5px;
+}
+
+.filterChecked {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    color: #0065BD;
+    display: none;
+    font-size: 16px;
+}
+
+.DetailArrow {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    font-size: 20px;
+}
+
+.DetailValue {
+    position: relative;
+    right: 25px;
+    /* position: absolute;
+    right: 35px;
+    top: 18px; */
+}
+
+#FacTitle {
+    position: absolute;
+    right: 13px;
+    top: 11px;
+}
+
+#ProgTitle {
+    position: absolute;
+    right: 13px;
+    top: 11px;
+}
+
+#ProgTitle,
+#FacTitle,
+.NA_FilterDefault {
+    color: #8e8e93;
+    text-align: right;
+}
+
+.mindSymbol {
+    position: absolute;
+    right: 40px;
+    top: 12px;
+    color: #8e8e93;
+}
+
+.maxSymbol {
+    position: absolute;
+    right: 17px;
+    top: 12px;
+    color: #8e8e93;
+}
+
+
+/*whiteArrow als Platzhalter vor der Angabe 'N/A' bei Filterauswahl*/
+
+.whiteArrow {
+    color: white;
+}
+
+#deleteFilters {
+    text-align: center;
+    margin: 15px;
+}
+
+
+/*CommentDetailScreen*/
+
+#reportButton {
+    position: relative;
+    left: 155px;
+    bottom: 5px;
+    color: #0065BD;
+}
+
+.CDetailValue {
+    position: absolute;
+    right: 35px;
+    top: 10px;
+    font-size: 18px;
+}
+
+.CDetailArrow {
+    position: absolute;
+    right: 5px;
+    top: 8px;
+    font-size: 25px;
+}
+
+.veryBad {
+    color: #f63a0f;
+}
+
+.bad {
+    color: #F3851D;
+}
+
+.neutral {
+    color: #f2d31b;
+}
+
+.good {
+    color: #b9e529;
+}
+
+.veryGood {
+    color: #1ec60b;
+}
+
+#closeCommentDetails {
+    position: absolute;
+    right: 0px;
+}
